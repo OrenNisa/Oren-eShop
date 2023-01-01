@@ -1,0 +1,23 @@
+.product-filter {
+    display: flex;
+    padding: 30px 0;
+}
+
+.sort {
+    display: flex;
+    align-self: flex-end;
+}
+
+@media (max-width: 480px) {
+    h1 {
+      margin-bottom: 20px;
+    }
+  
+    .product-filter {
+      flex-direction: column;
+    }
+  
+    .sort {
+      align-self: flex-start;
+    }
+  }
