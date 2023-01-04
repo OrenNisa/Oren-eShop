@@ -14,6 +14,7 @@ const Products = ({ isLoading }) => {
   const listItems = listItemsFiltered.map((product, index) => (
     <Product
       key={`${product} ${index}`}
+      productId={product.id}
       imgLink={product.image}
       productName={product.title}
       price={product.price}

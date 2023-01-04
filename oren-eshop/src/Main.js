@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
-import "./App.css";
-import Nav from "./components/Nav/Nav";
 import ProductContext from "./ProductContext";
-import Products from "./components/Products/Products";
 import StoreContext from "./StoreContext";
+import { Routes, Route } from "react-router-dom";
+import { Home, About, ProductView } from "./views/Index";
 
-function App() {
+function Main() {
   const [data, setData] = useState([]);
   const [category, setCategory] = useState("All items");
   const [sortBy, setSortBy] = useState("Featured");
@@ -38,13 +37,14 @@ function App() {
   return (
     <StoreContext.Provider value={StoreValues}>
       <ProductContext.Provider value={ProductValues}>
-        <div className="App">
-          <Nav />
-          <Products isLoading={isLoading} />
-        </div>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="about" element={<About />} />
+          <Route path="product/:productID" element={<ProductView />} />
+        </Routes>
       </ProductContext.Provider>
     </StoreContext.Provider>
   );
 }
 
-export default App;
+export default Main;
