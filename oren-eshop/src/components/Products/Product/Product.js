@@ -4,7 +4,7 @@ import "./Product.css";
 
 const Product = ({ imgLink, productName, price, productId }) => {
   const navigate = useNavigate();
-  const params = useParams();
+  //const params = useParams();
   return (
     <div className="product-card">
       <div className="product-image">

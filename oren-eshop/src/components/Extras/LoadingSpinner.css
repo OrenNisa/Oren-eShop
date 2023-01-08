@@ -1,8 +1,8 @@
 .spinner-examples {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    padding: 2rem;
-    grid-gap: 1rem;
+  display: flex;
+  padding: 2rem 10rem 2rem 0rem;
+  align-items: center;
+  justify-content: center;
   }
   
   .example {
@@ -15,8 +15,8 @@
   .spinner::after {
     content: '';
     box-sizing: border-box;
-    width: 40px;
-    height: 40px;
+    width: 140px;
+    height: 140px;
     position: absolute;
     border-radius: 50%;
   }

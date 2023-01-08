@@ -1,14 +1,29 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useFetch } from "../hooks/useFetch";
+import Product from "../components/Products/Product/Product";
+import { dataURL } from "../config";
+import { fetchData } from "../services/fetchData";
+import { useQuery } from "react-query";
 
 const ProductView = () => {
   const params = useParams();
-  const { data, loading, error } = useFetch(
-    `https://fakestoreapi.com/products/${params.productID}`
+  const { data: product, status } = useQuery("products", () =>
+    fetchData(`${dataURL}/${params.productID}`)
   );
-  console.log(data);
-  return data && <div>{data.id}</div>;
+
+  return (
+    <>
+      {status === "loading" && <p>loading...</p>}
+      {status === "success" && (
+        <Product
+          productId={product.id}
+          imgLink={product.image}
+          productName={product.title}
+          price={product.price}
+        />
+      )}
+    </>
+  );
 };
 
 export default ProductView;

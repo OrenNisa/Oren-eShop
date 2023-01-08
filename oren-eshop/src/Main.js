@@ -3,6 +3,9 @@ import ProductContext from "./ProductContext";
 import StoreContext from "./StoreContext";
 import { Routes, Route } from "react-router-dom";
 import { Home, About, ProductView } from "./views/Index";
+import { useQuery } from "react-query";
+import { fetchData } from "./services/fetchData";
+import { dataURL } from "./config";
 
 function Main() {
   const [data, setData] = useState([]);
@@ -10,14 +13,15 @@ function Main() {
   const [sortBy, setSortBy] = useState("Featured");
   const [isLoading, setLoading] = useState(true);
 
+  // const { data, status } = useQuery("products", () => fetchData(dataURL));
+
   useEffect(() => {
     getData();
   }, []);
 
   const getData = async () => {
-    const url = "https://fakestoreapi.com/products";
     try {
-      const response = await fetch(url);
+      const response = await fetch(dataURL);
       const answer = await response.json();
       setData(answer);
       setLoading(false); //stop loading when data is fetched
@@ -31,8 +35,10 @@ function Main() {
     category,
     setSortBy,
     sortBy,
+    isLoading,
+    setLoading,
   };
-  const ProductValues = { setData, data };
+  const ProductValues = { data };
 
   return (
     <StoreContext.Provider value={StoreValues}>

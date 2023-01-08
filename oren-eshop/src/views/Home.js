@@ -8,7 +8,6 @@ const Home = () => {
     <div>
       <Nav />
       <Products />
-      {/* <Products isLoading={isLoading} /> */}
     </div>
   );
 };

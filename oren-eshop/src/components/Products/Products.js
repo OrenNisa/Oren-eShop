@@ -5,9 +5,9 @@ import LoadingSpinner from "../Extras/LoadingSpinner";
 import Product from "./Product/Product";
 import "./Products.css";
 
-const Products = ({ isLoading }) => {
+const Products = () => {
   const { data } = useContext(ProductContext);
-  const { category } = useContext(StoreContext);
+  const { category, isLoading } = useContext(StoreContext);
   const listItemsFiltered = data.filter((product) => {
     return category === "All items" ? product : product.category === category;
   });
