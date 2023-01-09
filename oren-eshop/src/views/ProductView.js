@@ -4,6 +4,7 @@ import Product from "../components/Products/Product/Product";
 import { dataURL } from "../config";
 import { fetchData } from "../services/fetchData";
 import { useQuery } from "react-query";
+import LoadingSpinner from "../components/Extras/LoadingSpinner";
 
 const ProductView = () => {
   const params = useParams();
@@ -13,7 +14,7 @@ const ProductView = () => {
 
   return (
     <>
-      {status === "loading" && <p>loading...</p>}
+      {status === "loading" && <LoadingSpinner />}
       {status === "success" && (
         <Product
           productId={product.id}

@@ -8,27 +8,33 @@ import { fetchData } from "./services/fetchData";
 import { dataURL } from "./config";
 
 function Main() {
-  const [data, setData] = useState([]);
+  //const [data, setData] = useState([]);
   const [category, setCategory] = useState("All items");
   const [sortBy, setSortBy] = useState("Featured");
   const [isLoading, setLoading] = useState(true);
 
-  // const { data, status } = useQuery("products", () => fetchData(dataURL));
+  const {
+    data,
+    status: dataFetchedStatus,
+    refetch,
+  } = useQuery("products", () => fetchData(dataURL));
 
   useEffect(() => {
-    getData();
+    //getData();
+    refetch();
+    setLoading(false);
   }, []);
 
-  const getData = async () => {
-    try {
-      const response = await fetch(dataURL);
-      const answer = await response.json();
-      setData(answer);
-      setLoading(false); //stop loading when data is fetched
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const getData = async () => {
+  //   try {
+  //     const response = await fetch(dataURL);
+  //     const answer = await response.json();
+  //     setData(answer);
+  //     setLoading(false); //stop loading when data is fetched
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const StoreValues = {
     setCategory,
@@ -37,6 +43,7 @@ function Main() {
     sortBy,
     isLoading,
     setLoading,
+    dataFetchedStatus,
   };
   const ProductValues = { data };
 

@@ -1,10 +1,9 @@
 import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Product.css";
 
 const Product = ({ imgLink, productName, price, productId }) => {
   const navigate = useNavigate();
-  //const params = useParams();
   return (
     <div className="product-card">
       <div className="product-image">
