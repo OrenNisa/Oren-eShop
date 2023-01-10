@@ -5,6 +5,7 @@ import { fetchData } from "./services/fetchData";
 
 const StoreContext = createContext(null);
 const ProductsContext = createContext(null);
+const CartContext = createContext(null);
 
 export function useStore() {
   return useContext(StoreContext);
@@ -14,11 +15,17 @@ export function useProducts() {
   return useContext(ProductsContext);
 }
 
+export function useCart() {
+  return useContext(CartContext);
+}
+
 export function StoreProvider({ children }) {
   const [data, setData] = useState([]);
   const [category, setCategory] = useState("All items");
   const [sortBy, setSortBy] = useState("Featured");
   const [isLoading, setLoading] = useState(true);
+  const [cart, setCart] = useState([]);
+  const [prodInCart, setProdInCart] = useState({});
 
   // const {
   //   data,
@@ -30,11 +37,12 @@ export function StoreProvider({ children }) {
   // setLoading(false);
 
   useEffect(() => {
-    (async () => {
-      setData(fetchData(dataURL));
-    })();
+    // (async () => {
+    //   setData(fetchData(dataURL));
+    // })();
     //setData(fetchData(dataURL));
-    //getData();
+    getData();
+    fillProductsOnCart();
   }, []);
 
   const getData = async () => {
@@ -48,7 +56,15 @@ export function StoreProvider({ children }) {
     }
   };
 
-  const StoreValues = {
+  const fillProductsOnCart = () => {
+    let temp = {};
+    cart.forEach((product) => {
+      temp[product.id] = true;
+    });
+    setProdInCart(temp);
+  };
+
+  const storeValues = {
     setCategory,
     category,
     setSortBy,
@@ -57,12 +73,16 @@ export function StoreProvider({ children }) {
     setLoading,
     //dataFetchedStatus,
   };
-  const ProductsValues = { data };
+  const productsValues = { data };
+
+  const cartValues = { cart, setCart, prodInCart };
 
   return (
-    <StoreContext.Provider value={StoreValues}>
-      <ProductsContext.Provider value={ProductsValues}>
-        {children}
+    <StoreContext.Provider value={storeValues}>
+      <ProductsContext.Provider value={productsValues}>
+        <CartContext.Provider value={cartValues}>
+          {children}
+        </CartContext.Provider>
       </ProductsContext.Provider>
     </StoreContext.Provider>
   );

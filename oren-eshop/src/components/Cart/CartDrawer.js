@@ -3,11 +3,17 @@ import Drawer from "@mui/material/Drawer";
 
 const CartDrawer = ({ open, children }) => {
   return (
-    <div style={{ width: "300px" }}>
-      <Drawer anchor={"left"} open={open}>
-        {children}
-      </Drawer>
-    </div>
+    <Drawer
+      PaperProps={{
+        sx: {
+          width: 800,
+        },
+      }}
+      anchor={"left"}
+      open={open}
+    >
+      {children}
+    </Drawer>
   );
 };
 

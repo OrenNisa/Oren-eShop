@@ -9,18 +9,16 @@ import LoadingSpinner from "../components/Extras/LoadingSpinner";
 
 const Home = () => {
   const [cartOpen, setCartOpen] = useState(false);
-  const { dataFetchedStatus } = useStore();
+  const { isLoading } = useStore();
 
   const onClose = () => {
     setCartOpen(false);
   };
-  if (dataFetchedStatus === "loading" || dataFetchedStatus === "error")
-    return <LoadingSpinner />;
+  if (isLoading === true) return <LoadingSpinner />;
 
   return (
     <div>
       <CartDrawer open={cartOpen}>
-        something
         <button onClick={onClose}>CLOSE DRAWER</button>
       </CartDrawer>
       <ShoppingCartIcon onClick={() => setCartOpen(true)} />
