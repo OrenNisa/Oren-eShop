@@ -1,12 +1,11 @@
-import React, { useContext } from "react";
-import ProductContext from "../../../ProductContext";
-import StoreContext from "../../../StoreContext";
+import React from "react";
+import { useProducts, useStore } from "../../../StoreContext";
 import "./Filter.css";
 
 //.map((p) => p.category.charAt(0).toUpperCase() + p.category.slice(1))
 const Filter = () => {
-  const { setCategory } = useContext(StoreContext);
-  const { data } = useContext(ProductContext);
+  const { setCategory } = useStore();
+  const { data } = useProducts();
   const categories = data
     .map((p) => p.category)
     .filter((value, index, array) => array.indexOf(value) === index);

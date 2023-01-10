@@ -1,17 +1,8 @@
 import React from "react";
+import { sortOptions } from "../../../config";
 import "./Sort.css";
 
 const Sort = () => {
-  const sortOptions = [
-    "Featured",
-    "Best Selling",
-    "Alphabetically, A-Z",
-    "Alphabetically, Z-A",
-    "Price, low to high",
-    "Price, high to low",
-    "Date, new to old",
-    "Date, old to new",
-  ];
   const sortOptionsAsCmp = sortOptions.map((option, index) => (
     <option key={index} value={option}>
       {option}

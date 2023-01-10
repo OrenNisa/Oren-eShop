@@ -1,13 +1,12 @@
-import React, { useContext } from "react";
-import ProductContext from "../../ProductContext";
-import StoreContext from "../../StoreContext";
+import React from "react";
+import { useProducts, useStore } from "../../StoreContext";
 import LoadingSpinner from "../Extras/LoadingSpinner";
 import Product from "./Product/Product";
 import "./Products.css";
 
 const Products = () => {
-  const { data } = useContext(ProductContext);
-  const { category, isLoading } = useContext(StoreContext);
+  const { category, isLoading } = useStore();
+  const { data } = useProducts();
   const listItemsFiltered = data.filter((product) => {
     return category === "All items" ? product : product.category === category;
   });

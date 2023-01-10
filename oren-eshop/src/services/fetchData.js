@@ -4,6 +4,6 @@ export const fetchData = async (url) => {
     const answer = await response.json();
     return answer;
   } catch (error) {
-    console.log("AMIT");
+    console.error(error);
   }
 };
