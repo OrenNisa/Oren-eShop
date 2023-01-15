@@ -24,7 +24,7 @@ export function StoreProvider({ children }) {
   const [category, setCategory] = useState("All items");
   const [sortBy, setSortBy] = useState("Featured");
   const [isLoading, setLoading] = useState(true);
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(new Set());
   const [prodInCart, setProdInCart] = useState({});
 
   // const {
@@ -32,15 +32,10 @@ export function StoreProvider({ children }) {
   //   status: dataFetchedStatus,
   //   refetch,
   // } = useQuery("products", () => fetchData(dataURL));
-
   //refetch();
   // setLoading(false);
 
   useEffect(() => {
-    // (async () => {
-    //   setData(fetchData(dataURL));
-    // })();
-    //setData(fetchData(dataURL));
     getData();
     fillProductsOnCart();
   }, []);
@@ -50,19 +45,27 @@ export function StoreProvider({ children }) {
       const response = await fetch(dataURL);
       const answer = await response.json();
       setData(answer);
-      setLoading(false); //stop loading when data is fetched
+      setLoading(false);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const fillProductsOnCart = () => {
-    let temp = {};
-    cart.forEach((product) => {
-      temp[product.id] = true;
+  function addToCart(item) {
+    setCart((prevCart) => new Set(prevCart).add(item));
+  }
+
+  function removeFromCart(item) {
+    setCart((prevCart) => {
+      const newCart = new Set(prevCart);
+      newCart.delete(item);
+      return newCart;
     });
-    setProdInCart(temp);
-  };
+  }
+
+  function isInCart(item) {
+    return cart.has(item);
+  }
 
   const storeValues = {
     setCategory,
@@ -75,7 +78,7 @@ export function StoreProvider({ children }) {
   };
   const productsValues = { data };
 
-  const cartValues = { cart, setCart, prodInCart };
+  const cartValues = { cart, addToCart, removeFromCart, isInCart };
 
   return (
     <StoreContext.Provider value={storeValues}>

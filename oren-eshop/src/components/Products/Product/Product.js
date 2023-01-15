@@ -1,17 +1,14 @@
-import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../../StoreContext";
 import "./Product.css";
 
 const Product = ({ imgLink, productName, price, productId }) => {
   const navigate = useNavigate();
-  const { cart, setCart, prodInCart } = useCart();
+  const { cart, addToCart, removeFromCart, isInCart } = useCart();
   let prodIndex = cart.findIndex((product) => product.id === productId);
-  // let amount = cart.length ? cart[prodIndex].amount : 0;
 
   const addProductToCart = () => {
     let tempCart = [...cart];
-    //const prodIndex = tempCart.findIndex((product) => product.id === productId);
     if (prodIndex !== -1) {
       tempCart[prodIndex].amount++;
     } else {
@@ -19,12 +16,11 @@ const Product = ({ imgLink, productName, price, productId }) => {
       tempCart.push(newProduct);
     }
     prodIndex = tempCart.findIndex((product) => product.id === productId);
-    setCart(tempCart);
+    addToCart(tempCart);
   };
 
-  const removeProductToCart = () => {
+  const removeProductFromCart = () => {
     let tempCart = [...cart];
-    //const prodIndex = tempCart.findIndex((product) => product.id === productId);
     if (prodIndex !== -1) {
       if (tempCart[prodIndex].amount === 1) {
         tempCart.splice(prodIndex, 1);
@@ -32,9 +28,9 @@ const Product = ({ imgLink, productName, price, productId }) => {
         tempCart[prodIndex].amount--;
       }
     }
-    setCart(tempCart);
+
+    addToCart(tempCart);
   };
-  console.log(cart[0]);
   return (
     <div className="product-card">
       <div className="product-image">
@@ -51,12 +47,24 @@ const Product = ({ imgLink, productName, price, productId }) => {
         <h6>${price}</h6>
       </div>
       <div>
-        <button onClick={removeProductToCart} disabled={!prodInCart.productId}>
+        <button
+          onClick={() => {
+            removeProductFromCart();
+            console.log(prodInCart);
+          }}
+          //disabled={!prodInCart.productId}
+        >
           -
         </button>
-        <span>{cart.length ? cart[0].amount : 0}</span>
-        <span>{cart}</span>
-        <button onClick={addProductToCart}>+</button>
+        <span>{cart?.[prodIndex]?.amount ? cart[prodIndex].amount : 0}</span>
+        <button
+          onClick={() => {
+            addProductToCart();
+            console.log(cart?.[prodIndex]?.amount);
+          }}
+        >
+          +
+        </button>
       </div>
     </div>
   );
