@@ -4,32 +4,50 @@ import "./Product.css";
 
 const Product = ({ imgLink, productName, price, productId }) => {
   const navigate = useNavigate();
-  const { cart, addToCart, removeFromCart, isInCart } = useCart();
-  let prodIndex = cart.findIndex((product) => product.id === productId);
+  const { cart, setCart } = useCart();
 
-  const addProductToCart = () => {
-    let tempCart = [...cart];
-    if (prodIndex !== -1) {
-      tempCart[prodIndex].amount++;
+  const addProductToCart = (newAmount) => {
+    let currentProduct = cart.get(productId);
+    if (currentProduct) {
+      setCart((prevCart) => {
+        return new Map(prevCart).set(productId, {
+          imgLink,
+          productName,
+          price,
+          amount: currentProduct.amount + newAmount,
+        });
+      });
     } else {
-      let newProduct = { id: productId, amount: 1 };
-      tempCart.push(newProduct);
+      setCart((prevCart) => {
+        return new Map(prevCart).set(productId, {
+          imgLink,
+          productName,
+          price,
+          amount: newAmount,
+        });
+      });
     }
-    prodIndex = tempCart.findIndex((product) => product.id === productId);
-    addToCart(tempCart);
   };
 
-  const removeProductFromCart = () => {
-    let tempCart = [...cart];
-    if (prodIndex !== -1) {
-      if (tempCart[prodIndex].amount === 1) {
-        tempCart.splice(prodIndex, 1);
+  const removeProductFromCart = (newAmount) => {
+    let currentProduct = cart.get(productId);
+    if (currentProduct) {
+      if (currentProduct.amount - newAmount > 0) {
+        setCart((prevCart) => {
+          return new Map(prevCart).set(productId, {
+            imgLink,
+            productName,
+            price,
+            amount: currentProduct.amount - newAmount,
+          });
+        });
       } else {
-        tempCart[prodIndex].amount--;
+        setCart((prevCart) => {
+          prevCart.delete(productId);
+          return new Map(prevCart);
+        });
       }
     }
-
-    addToCart(tempCart);
   };
   return (
     <div className="product-card">
@@ -48,23 +66,15 @@ const Product = ({ imgLink, productName, price, productId }) => {
       </div>
       <div>
         <button
-          onClick={() => {
-            removeProductFromCart();
-            console.log(prodInCart);
-          }}
-          //disabled={!prodInCart.productId}
+          onClick={() => removeProductFromCart(1)}
+          disabled={!cart.has(productId)}
         >
           -
         </button>
-        <span>{cart?.[prodIndex]?.amount ? cart[prodIndex].amount : 0}</span>
-        <button
-          onClick={() => {
-            addProductToCart();
-            console.log(cart?.[prodIndex]?.amount);
-          }}
-        >
-          +
-        </button>
+        <span>
+          {cart.get(productId)?.amount ? cart.get(productId).amount : 0}
+        </span>
+        <button onClick={() => addProductToCart(1)}>+</button>
       </div>
     </div>
   );

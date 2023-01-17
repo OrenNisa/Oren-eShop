@@ -1,7 +1,7 @@
 import React from "react";
 import Drawer from "@mui/material/Drawer";
 
-const CartDrawer = ({ open, children }) => {
+const CartDrawer = ({ cartOpen, setCartOpen, children }) => {
   return (
     <Drawer
       PaperProps={{
@@ -10,7 +10,9 @@ const CartDrawer = ({ open, children }) => {
         },
       }}
       anchor={"left"}
-      open={open}
+      open={cartOpen}
+      onClose={() => setCartOpen(false)}
+      onBackdropClick={() => setCartOpen(false)}
     >
       {children}
     </Drawer>

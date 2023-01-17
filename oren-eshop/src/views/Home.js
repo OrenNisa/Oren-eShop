@@ -11,17 +11,14 @@ const Home = () => {
   const [cartOpen, setCartOpen] = useState(false);
   const { isLoading } = useStore();
 
-  const onClose = () => {
-    setCartOpen(false);
-  };
   if (isLoading === true) return <LoadingSpinner />;
 
   return (
     <div>
-      <CartDrawer open={cartOpen}>
-        <button onClick={onClose}>CLOSE DRAWER</button>
+      <CartDrawer cartOpen={cartOpen} setCartOpen={setCartOpen}>
+        {/* <button onClick={handleClose}>CLOSE DRAWER</button> */}
       </CartDrawer>
-      <ShoppingCartIcon onClick={() => setCartOpen(true)} />
+      <ShoppingCartIcon onClick={() => setCartOpen(!cartOpen)} />
 
       <Nav />
       <Products />
