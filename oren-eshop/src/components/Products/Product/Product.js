@@ -58,55 +58,41 @@ const Product = ({ imgLink, productName, price, productId }) => {
     }
   };
   return (
-    // <Card className="product-card">
-    //   <CardActionArea>
-    //     <CardMedia
-    //       component="img"
-    //       height="140"
-    //       image="https://mui.com/static/images/cards/contemplative-reptile.jpg"
-    //       alt="green iguana"
-    //     />
-    //     <CardContent>
-    //       <Typography gutterBottom variant="h5" component="div">
-    //         Lizard
-    //       </Typography>
-    //       <Typography variant="body2" color="text.secondary">
-    //         Lizards are a widespread group of squamate reptiles, with over 6,000
-    //         species, ranging across all continents except Antarctica
-    //       </Typography>
-    //     </CardContent>
-    //   </CardActionArea>
-    //   <CardActions>
-    //     <Button size="small" color="primary">
-    //       Share
-    //     </Button>
-    //   </CardActions>
-    // </Card>
-
     <Card className="product-card">
-      <CardActionArea>
-        <CardMedia component="img" image={imgLink} alt="" />
+      <CardActionArea
+        onClick={() => {
+          navigate(`product/${productId}`);
+        }}
+      >
+        <CardMedia
+          className="product-image"
+          component="img"
+          image={imgLink}
+          alt=""
+        />
         <CardContent className="product-info">
-          <Typography gutterBottom sx={{ fontSize: "1.5em" }} component="div">
+          <Typography className="product-name" gutterBottom component="div">
             {productName}
-          </Typography>
-          <Typography gutterBottom variant="h9" component="div">
-            ${price}
           </Typography>
         </CardContent>
       </CardActionArea>
 
       <CardActions className="buttons-section">
-        <Button
-          onClick={() => removeProductFromCart(1)}
-          disabled={!cart.has(productId)}
-        >
-          -
-        </Button>
-        <span>
-          {cart.get(productId)?.amount ? cart.get(productId).amount : 0}
-        </span>
-        <Button onClick={() => addProductToCart(1)}>+</Button>
+        <Typography gutterBottom variant="h6" component="div">
+          ${price}
+        </Typography>
+        <div>
+          <Button
+            onClick={() => removeProductFromCart(1)}
+            disabled={!cart.has(productId)}
+          >
+            -
+          </Button>
+          <span>
+            {cart.get(productId)?.amount ? cart.get(productId).amount : 0}
+          </span>
+          <Button onClick={() => addProductToCart(1)}>+</Button>
+        </div>
       </CardActions>
     </Card>
   );

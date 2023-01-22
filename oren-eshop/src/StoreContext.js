@@ -24,7 +24,7 @@ export function StoreProvider({ children }) {
   const [data, setData] = useState([]);
   const [category, setCategory] = useState("All items");
   const [sortBy, setSortBy] = useState("Featured");
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   const [cart, setCart] = useState(new Map());
   //const { data, loading, error, getProductFromServer } = useFetch(dataURL);
 
