@@ -1,4 +1,4 @@
-export const dataURL = "https://fakestoreapi.com/products";
+export const dataURL = "http://localhost:8000/api/Shop/getAllItems";
 
 export const sortOptions = [
   "Featured",
