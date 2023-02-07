@@ -68,6 +68,22 @@ app.get("/api/Shop/getAllItems", async (req, res) => {
   }
 });
 
+app.get("/api/Shop/getItem/:id", async (req, res) => {
+  try {
+    const itemId = req.params.id;
+    const item = await Item.findOne({ _id: itemId });
+
+    if (!item) {
+      return res.status(404).send({ message: "Item not found." });
+    }
+
+    res.status(200).send(item);
+  } catch (e) {
+    console.log(e);
+    res.status(500).send({ message: e });
+  }
+});
+
 app.post("/api/Shop/addItem", async (req, res) => {
   try {
     const item = new Item(req.body);
