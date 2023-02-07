@@ -11,7 +11,7 @@ export const getAllItemsController = async (req, res) => {
   try {
     const allItems = await getAllItems();
 
-    res.status(200).send({ allItems });
+    res.status(200).send(allItems);
   } catch (e) {
     console.log(e);
     res.status(500).send({ message: e });
