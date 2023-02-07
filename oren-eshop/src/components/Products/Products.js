@@ -13,7 +13,7 @@ const Products = () => {
   const listItems = listItemsFiltered.map((product, index) => (
     <Product
       key={`${product} ${index}`}
-      productId={product.id}
+      productId={product._id}
       imgLink={product.image}
       productName={product.title}
       price={product.price}

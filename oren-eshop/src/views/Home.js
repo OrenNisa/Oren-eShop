@@ -6,6 +6,7 @@ import CartDrawer from "../components/Cart/CartDrawer";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useStore } from "../StoreContext";
 import LoadingSpinner from "../components/Extras/LoadingSpinner";
+import ProductInCart from "../components/Cart/ProductInCart";
 
 const Home = () => {
   const [cartOpen, setCartOpen] = useState(false);
@@ -17,6 +18,8 @@ const Home = () => {
     <div>
       <CartDrawer cartOpen={cartOpen} setCartOpen={setCartOpen}>
         {/* <button onClick={handleClose}>CLOSE DRAWER</button> */}
+        <p>111</p>
+        {/* <ProductInCart /> */}
       </CartDrawer>
       <ShoppingCartIcon onClick={() => setCartOpen(!cartOpen)} />
 
